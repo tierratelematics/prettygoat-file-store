@@ -8,6 +8,38 @@ Filesystem as event store for [prettygoat](https://github.com/tierratelematics/p
 $ npm install prettygoat-file-store
 `
 
+Add this code to the boostrapper.
+
+```typescript
+import {FileModule} from "prettygoat-file-store";
+
+engine.register(new FileModule());
+```
+
+Optionally you can configure a different folder for your events (the default one is called "events);
+
+```typescript
+import {IFileConfig} from "prettygoat-file-store";
+
+container.bind<IFileConfig>("IFileConfig").toConstantValue({ 
+    directory: "your_directory"
+});
+```
+
+## Usage
+
+Simply put a list of prettygoat events in your events folder and run the engine. An event file is a JSON (or a js) that looks like this:
+
+```javascript
+module.exports = [
+    {
+        "type": "myevent",
+        "payload": "mypayload",
+        "timestamp": new Date(1)
+    }
+];
+```
+
 ## License
 
 Copyright 2016 Tierra SpA
