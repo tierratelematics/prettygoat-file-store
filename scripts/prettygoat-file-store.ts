@@ -1,1 +1,1 @@
-export {default as CassandraModule} from "./CassandraModule";
+export {default as FileModule} from "./FileModule";
