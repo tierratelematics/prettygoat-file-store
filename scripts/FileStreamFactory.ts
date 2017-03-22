@@ -14,20 +14,15 @@ class FileStreamFactory implements IStreamFactory {
     }
 
     from(lastEvent: Date, completions?: Observable<string>, definition?: IWhen<any>): Observable<Event> {
-        return Observable.create<Event>(observer => {
-            this.directoryScanner.scan(this.config.directory)
-                .then(scan => {
-                    let events = _(scan).map(json => json).concat().flatten().map((event: any) => {
-                        if (_.isString(event.timestamp))
-                            event.timestamp = new Date(event.timestamp);
-                        return event;
-                    }).valueOf();
-                    _.forEach(events, event => observer.onNext(event));
-                    observer.onCompleted();
-                })
-                .catch(error => observer.onError(error));
-        });
+        return Observable.fromPromise<Scan>(this.directoryScanner.scan(this.config.directory))
+            .map<Event[]>(scan => _(scan).map(json => json).concat().flatten().map((event: any) => {
+                if (_.isString(event.timestamp))
+                    event.timestamp = new Date(event.timestamp);
+                return event;
+            }).valueOf())
+            .flatMap(events => Observable.from(events));
     }
+
 }
 
 export default FileStreamFactory

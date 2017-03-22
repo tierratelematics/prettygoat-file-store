@@ -1,3 +1,5 @@
+import {Dictionary} from "prettygoat";
+
 export type Scan = Dictionary<any>;
 
 export interface IDirectoryScanner {
