@@ -1,6 +1,8 @@
 import {ISnapshotRepository, Dictionary, Snapshot} from "prettygoat";
 import {Observable} from "rx";
+import {injectable} from "inversify";
 
+@injectable()
 class FileSnapshotRepository implements ISnapshotRepository {
 
     initialize(): Observable<void> {

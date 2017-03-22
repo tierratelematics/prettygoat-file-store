@@ -18,7 +18,7 @@ describe("Given a file stream factory", () => {
         context("and a list with timestamps as string", () => {
             beforeEach(() => {
                 const events = require("./fixtures/events.json");
-                scanner.setup(s => s.scan("./events")).returns(() => Promise.resolve(events));
+                scanner.setup(s => s.scan("events")).returns(() => Promise.resolve(events));
             });
             it("should use a list of json files as events", () => {
                 let notifications = [];
@@ -44,7 +44,7 @@ describe("Given a file stream factory", () => {
 
         context("and a list with timestamps as object is used", () => {
             beforeEach(() => {
-                scanner.setup(s => s.scan("./events")).returns(() => Promise.resolve(eventsTimestamp));
+                scanner.setup(s => s.scan("events")).returns(() => Promise.resolve(eventsTimestamp));
             });
             it("should not be transformed", () => {
                 let notifications = [];

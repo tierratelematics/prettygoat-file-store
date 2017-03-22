@@ -3,5 +3,5 @@ export interface IFileConfig {
 }
 
 export class DefaultFileConfig implements IFileConfig {
-    directory = "./events";
+    directory = "events";
 }
