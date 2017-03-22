@@ -1,4 +1,5 @@
 import {Dictionary} from "prettygoat";
+const requireDir = require("require-dir");
 
 export type Scan = Dictionary<any>;
 
@@ -8,12 +9,8 @@ export interface IDirectoryScanner {
 
 export class DirectoryScanner implements IDirectoryScanner {
 
-    constructor() {
-
-    }
-
     scan(folder: string): Promise<Scan> {
-        return undefined;
+        return Promise.resolve(requireDir(folder));
     }
 
 }
