@@ -21,22 +21,23 @@ describe("Given a file stream factory", () => {
                 scanner.setup(s => s.scan("./events")).returns(() => Promise.resolve(events));
             });
             it("should use a list of json files as events", () => {
-                let notifications = subject.from(null).subscribe(event => notifications.push(event));
-
-                expect(notifications).to.have.length(3);
-                expect(notifications[0]).to.eql({
-                    "type": "test_event",
-                    "payload": {
-                        "id": "78390023"
-                    },
-                    "timestamp": new Date(2)
-                });
-                expect(notifications[2]).to.eql({
-                    "type": "FooRegistered",
-                    "payload": {
-                        "bar": "test"
-                    },
-                    "timestamp": new Date(10)
+                let notifications = [];
+                subject.from(null).subscribe(event => notifications.push(event), null, () => {
+                    expect(notifications).to.have.length(3);
+                    expect(notifications[0]).to.eql({
+                        "type": "test_event",
+                        "payload": {
+                            "id": "78390023"
+                        },
+                        "timestamp": new Date(2)
+                    });
+                    expect(notifications[2]).to.eql({
+                        "type": "FooRegistered",
+                        "payload": {
+                            "bar": "test"
+                        },
+                        "timestamp": new Date(10)
+                    });
                 });
             });
         });
@@ -46,22 +47,23 @@ describe("Given a file stream factory", () => {
                 scanner.setup(s => s.scan("./events")).returns(() => Promise.resolve(eventsTimestamp));
             });
             it("should not be transformed", () => {
-                let notifications = subject.from(null).subscribe(event => notifications.push(event));
-
-                expect(notifications).to.have.length(3);
-                expect(notifications[0]).to.eql({
-                    "type": "test_event",
-                    "payload": {
-                        "id": "78390023"
-                    },
-                    "timestamp": new Date(2)
-                });
-                expect(notifications[2]).to.eql({
-                    "type": "FooRegistered",
-                    "payload": {
-                        "bar": "test"
-                    },
-                    "timestamp": new Date(10)
+                let notifications = [];
+                subject.from(null).subscribe(event => notifications.push(event), null, () => {
+                    expect(notifications).to.have.length(3);
+                    expect(notifications[0]).to.eql({
+                        "type": "test_event",
+                        "payload": {
+                            "id": "78390023"
+                        },
+                        "timestamp": new Date(2)
+                    });
+                    expect(notifications[2]).to.eql({
+                        "type": "FooRegistered",
+                        "payload": {
+                            "bar": "test"
+                        },
+                        "timestamp": new Date(10)
+                    });
                 });
             });
         });
