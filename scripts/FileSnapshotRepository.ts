@@ -1,26 +1,26 @@
-import {ISnapshotRepository} from "prettygoat";
+import {ISnapshotRepository, Dictionary, Snapshot} from "prettygoat";
 import {Observable} from "rx";
 
 class FileSnapshotRepository implements ISnapshotRepository {
 
     initialize(): Observable<void> {
-        return undefined;
+        return Observable.just(null);
     }
 
     getSnapshots(): Observable<Dictionary<Snapshot<any>>> {
-        return undefined;
+        return Observable.just({});
     }
 
     getSnapshot<T>(streamId: string): Observable<Snapshot<T>> {
-        return undefined;
+        return Observable.just(null);
     }
 
     saveSnapshot<T>(streamId: string, snapshot: Snapshot<T>): Observable<void> {
-        return undefined;
+        return Observable.just(null);
     }
 
     deleteSnapshot(streamId: string): Observable<void> {
-        return undefined;
+        return Observable.just(null);
     }
 
 }
