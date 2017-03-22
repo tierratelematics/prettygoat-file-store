@@ -4,6 +4,7 @@ import {IMock, Mock} from "typemoq";
 import FileStreamFactory from "../scripts/FileStreamFactory";
 import {IDirectoryScanner} from "../scripts/DirectoryScanner";
 import eventsTimestamp from "./fixtures/eventsTimestamp";
+import unorderdEvents from "./fixtures/unorderdEvents";
 
 describe("Given a file stream factory", () => {
     let subject: FileStreamFactory;
@@ -20,7 +21,7 @@ describe("Given a file stream factory", () => {
                 const events = require("./fixtures/events.json");
                 scanner.setup(s => s.scan("events")).returns(() => Promise.resolve(events));
             });
-            it("should use a list of json files as events", () => {
+            it("should use a list of json files as events", (done) => {
                 let notifications = [];
                 subject.from(null).subscribe(event => notifications.push(event), null, () => {
                     expect(notifications).to.have.length(3);
@@ -38,6 +39,7 @@ describe("Given a file stream factory", () => {
                         },
                         "timestamp": new Date(10)
                     });
+                    done();
                 });
             });
         });
@@ -46,7 +48,7 @@ describe("Given a file stream factory", () => {
             beforeEach(() => {
                 scanner.setup(s => s.scan("events")).returns(() => Promise.resolve(eventsTimestamp));
             });
-            it("should not be transformed", () => {
+            it("should not be transformed", (done) => {
                 let notifications = [];
                 subject.from(null).subscribe(event => notifications.push(event), null, () => {
                     expect(notifications).to.have.length(3);
@@ -64,6 +66,22 @@ describe("Given a file stream factory", () => {
                         },
                         "timestamp": new Date(10)
                     });
+                    done();
+                });
+            });
+        });
+
+        context("and a list of events with unordered timestamps is used", () => {
+            beforeEach(() => {
+                scanner.setup(s => s.scan("events")).returns(() => Promise.resolve(unorderdEvents));
+            });
+            it("should order them", (done) => {
+                let notifications = [];
+                subject.from(null).subscribe(event => notifications.push(event), null, () => {
+                    expect(notifications[0].timestamp).to.eql(new Date(2));
+                    expect(notifications[1].timestamp).to.eql(new Date(4));
+                    expect(notifications[2].timestamp).to.eql(new Date(10));
+                    done();
                 });
             });
         });

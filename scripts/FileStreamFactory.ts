@@ -19,7 +19,7 @@ class FileStreamFactory implements IStreamFactory {
                 if (_.isString(event.timestamp))
                     event.timestamp = new Date(event.timestamp);
                 return event;
-            }).valueOf())
+            }).sortBy(event => event.timestamp).valueOf())
             .flatMap(events => Observable.from(events));
     }
 
