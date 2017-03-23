@@ -15,7 +15,7 @@ class FileStreamFactory implements IStreamFactory {
 
     from(lastEvent: Date, completions?: Observable<string>, definition?: IWhen<any>): Observable<Event> {
         return Observable.fromPromise<Scan>(this.directoryScanner.scan(this.config.directory))
-            .map<Event[]>(scan => _(scan).map(json => json).concat().flatten().map((event: any) => {
+            .map<Event[]>(scan => _(scan).flatten().map((event: any) => {
                 if (_.isString(event.timestamp))
                     event.timestamp = new Date(event.timestamp);
                 return event;

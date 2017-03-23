@@ -26,6 +26,17 @@ container.bind<IFileConfig>("IFileConfig").toConstantValue({
 });
 ```
 
+Disable nodemon on the events folder by modifying your smildfile.
+
+```javascript
+module.exports = {
+    "projectType": "nodejs",
+    "nodemon": {
+        "ignore": ["events/**/*"]
+    }
+};
+```
+
 ## Usage
 
 Simply put a list of prettygoat events in your events folder and run the engine. An event file is a JSON (or a js) that looks like this:
