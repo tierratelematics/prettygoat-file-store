@@ -7,3 +7,7 @@ export class FileModule implements IModule {
 export interface IFileConfig {
     directory: string;
 }
+
+export interface IPollToPushConfig {
+    interval: number
+}

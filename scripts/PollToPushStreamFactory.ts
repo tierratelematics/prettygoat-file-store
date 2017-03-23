@@ -1,11 +1,13 @@
 import {IStreamFactory, Event, IWhen} from "prettygoat";
-import {injectable, inject} from "inversify";
+import {injectable, inject, optional} from "inversify";
 import {Observable} from "rx";
+import {DefaultPollToPushConfig, IPollToPushConfig} from "./PollToPushConfig";
 
 @injectable()
 class PollToPushStreamFactory implements IStreamFactory {
 
-    constructor(@inject("StreamFactory") private streamFactory: IStreamFactory) {
+    constructor(@inject("StreamFactory") private streamFactory: IStreamFactory,
+                @inject("IPollToPushConfig") @optional() private config: IPollToPushConfig = new DefaultPollToPushConfig()) {
 
     }
 
@@ -20,7 +22,7 @@ class PollToPushStreamFactory implements IStreamFactory {
             }))
             .concat(
                 Observable
-                    .interval(5000)
+                    .interval(this.config.interval)
                     .flatMap(_ => this.streamFactory.from(lastEvent, completions, definition))
             )
             .filter(event => event.timestamp > lastEvent)
