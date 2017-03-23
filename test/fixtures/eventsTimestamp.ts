@@ -1,5 +1,5 @@
-export default {
-    "test": [
+export default [
+    [
         {
             "type": "test_event",
             "payload": {
@@ -14,8 +14,7 @@ export default {
             },
             "timestamp": new Date(4)
         }
-    ],
-    "foo": [
+    ], [
         {
             "type": "FooRegistered",
             "payload": {
@@ -24,4 +23,4 @@ export default {
             "timestamp": new Date(10)
         }
     ]
-}
+]

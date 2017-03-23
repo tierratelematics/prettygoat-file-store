@@ -1,9 +1,10 @@
-import {Dictionary} from "prettygoat";
 import {injectable} from "inversify";
-const requireDir = require("require-dir");
+const requireUncached = require("require-uncached");
+import {files} from "node-dir";
 import {join} from "path";
+import {map} from "lodash";
 
-export type Scan = Dictionary<any>;
+export type Scan = any[];
 
 export interface IDirectoryScanner {
     scan(folder: string): Promise<Scan>;
@@ -13,7 +14,13 @@ export interface IDirectoryScanner {
 export class DirectoryScanner implements IDirectoryScanner {
 
     scan(folder: string): Promise<Scan> {
-        return Promise.resolve(requireDir(join(process.cwd(), folder)));
+        let path = join(process.cwd(), folder);
+        return new Promise((resolve, reject) => {
+            files(path, (error, list) => {
+                if (error) reject(error);
+                resolve(map(list, file => requireUncached(file)));
+            });
+        });
     }
 
 }
