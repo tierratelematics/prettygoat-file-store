@@ -1,3 +1,7 @@
+# 1.1.1
+
+Fix lodash types
+
 # 1.1.0
 
 Add polling on the events folder
