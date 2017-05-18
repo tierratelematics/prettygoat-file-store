@@ -25,7 +25,7 @@ class PollToPushStreamFactory implements IStreamFactory {
                     .interval(this.config.interval)
                     .flatMap(_ => this.streamFactory.from(lastEvent, completions, definition))
             )
-            .filter(event => event.timestamp > lastEvent)
+            .filter(event => !event.timestamp ? true : event.timestamp > lastEvent)
             .do(event => {
                 if (event.timestamp)
                     lastEvent = event.timestamp
