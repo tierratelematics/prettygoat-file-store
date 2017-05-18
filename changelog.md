@@ -1,3 +1,7 @@
+# 1.1.2
+
+Fix filtering of realtime event
+
 # 1.1.1
 
 Fix lodash types
