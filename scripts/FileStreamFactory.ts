@@ -1,5 +1,5 @@
-import {IStreamFactory, IWhen, Event} from "prettygoat";
-import {Observable} from "rx";
+import {IStreamFactory, WhenBlock, Event} from "prettygoat";
+import {Observable} from "rxjs";
 import {inject, injectable, optional} from "inversify";
 import {IDirectoryScanner, Scan} from "./DirectoryScanner";
 import {IFileConfig, DefaultFileConfig} from "./FileConfig";
@@ -13,8 +13,8 @@ class FileStreamFactory implements IStreamFactory {
 
     }
 
-    from(lastEvent: Date, completions?: Observable<string>, definition?: IWhen<any>): Observable<Event> {
-        return Observable.fromPromise<Scan>(this.directoryScanner.scan(this.config.directory))
+    from(lastEvent: Date, completions?: Observable<string>, definition?: WhenBlock<any>): Observable<Event> {
+        return Observable.from<Scan>(this.directoryScanner.scan(this.config.directory))
             .map<Event[]>(scan => _(scan).flatten().map((event: any) => {
                 if (_.isString(event.timestamp))
                     event.timestamp = new Date(event.timestamp);

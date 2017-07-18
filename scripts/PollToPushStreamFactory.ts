@@ -1,6 +1,6 @@
-import {IStreamFactory, Event, IWhen} from "prettygoat";
+import {IStreamFactory, Event, WhenBlock, SpecialEvents} from "prettygoat";
 import {injectable, inject, optional} from "inversify";
-import {Observable} from "rx";
+import {Observable} from "rxjs";
 import {DefaultPollToPushConfig, IPollToPushConfig} from "./PollToPushConfig";
 
 @injectable()
@@ -11,11 +11,11 @@ class PollToPushStreamFactory implements IStreamFactory {
 
     }
 
-    from(lastEvent: Date, completions?: Observable<string>, definition?: IWhen<any>): Observable<Event> {
+    from(lastEvent: Date, completions?: Observable<string>, definition?: WhenBlock<any>): Observable<Event> {
         return this.streamFactory
             .from(lastEvent, completions, definition)
             .concat(Observable.just({
-                type: "__prettygoat_internal_realtime",
+                type: SpecialEvents.REALTIME,
                 payload: null,
                 timestamp: null,
                 splitKey: null
@@ -28,7 +28,7 @@ class PollToPushStreamFactory implements IStreamFactory {
             .filter(event => !event.timestamp ? true : event.timestamp > lastEvent)
             .do(event => {
                 if (event.timestamp)
-                    lastEvent = event.timestamp
+                    lastEvent = event.timestamp;
             });
     }
 }
