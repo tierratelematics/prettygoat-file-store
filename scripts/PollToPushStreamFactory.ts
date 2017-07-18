@@ -14,7 +14,7 @@ class PollToPushStreamFactory implements IStreamFactory {
     from(lastEvent: Date, completions?: Observable<string>, definition?: WhenBlock<any>): Observable<Event> {
         return this.streamFactory
             .from(lastEvent, completions, definition)
-            .concat(Observable.just({
+            .concat(Observable.of({
                 type: SpecialEvents.REALTIME,
                 payload: null,
                 timestamp: null,
