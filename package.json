@@ -12,7 +12,7 @@
     "@types/node": "~6.0.52",
     "@types/node-dir": "0.0.30",
     "@types/socket.io": "~1.4.27",
-    "inversify": "~3.1.0",
+    "inversify": "~4.1.1",
     "lodash": "~4.13.1",
     "moment": "~2.18.0",
     "node-dir": "~0.1.16",
