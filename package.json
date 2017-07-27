@@ -21,7 +21,7 @@
     "rxjs": "~5.4.2"
   },
   "peerDependencies": {
-    "prettygoat": "^2.0.0"
+    "prettygoat": "^4.0.0-0"
   },
   "main": "dist/prettygoat-file-store.js",
   "typings": "declarations/prettygoat-file-store.d.ts"
