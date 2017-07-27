@@ -1,6 +1,6 @@
 {
   "name": "prettygoat-file-store",
-  "version": "1.1.2",
+  "version": "2.0.0-0",
   "devDependencies": {
     "@types/expect.js": "~0.3.29",
     "@types/mocha": "~2.2.33",
@@ -12,16 +12,16 @@
     "@types/node": "~6.0.52",
     "@types/node-dir": "0.0.30",
     "@types/socket.io": "~1.4.27",
-    "inversify": "~3.1.0",
+    "inversify": "~4.1.1",
     "lodash": "~4.13.1",
     "moment": "~2.18.0",
     "node-dir": "~0.1.16",
     "reflect-metadata": "0.1.8",
     "require-uncached": "~1.0.3",
-    "rx": "~4.1.0"
+    "rxjs": "~5.4.2"
   },
   "peerDependencies": {
-    "prettygoat": "^2.0.0"
+    "prettygoat": "^4.0.0-0"
   },
   "main": "dist/prettygoat-file-store.js",
   "typings": "declarations/prettygoat-file-store.d.ts"

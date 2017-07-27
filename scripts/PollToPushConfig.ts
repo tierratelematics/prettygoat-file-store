@@ -1,7 +1,7 @@
 export interface IPollToPushConfig {
-    interval: number
+    interval: number;
 }
 
 export class DefaultPollToPushConfig implements IPollToPushConfig {
-    interval = 2000
+    interval = 2000;
 }
