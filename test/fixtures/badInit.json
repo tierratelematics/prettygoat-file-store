@@ -1,0 +1,9 @@
+[
+  {
+    "type": "test_event",
+    "payload": {
+      "id": "78390023"
+    },
+    "timestamp": "bad date"
+  }
+]

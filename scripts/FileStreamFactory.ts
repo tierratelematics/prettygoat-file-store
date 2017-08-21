@@ -18,6 +18,8 @@ class FileStreamFactory implements IStreamFactory {
             .map<any, Event[]>(scan => _(scan).flatten().map((event: any) => {
                 if (_.isString(event.timestamp))
                     event.timestamp = new Date(event.timestamp);
+                if (isNaN(event.timestamp))
+                    throw new Error("An invalid date has been supplied to an event: could be new Date(0) or a bad format");
                 return event;
             }).sortBy(event => event.timestamp).valueOf())
             .flatMap(events => Observable.from(events));
