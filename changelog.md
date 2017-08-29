@@ -1,3 +1,7 @@
+# 2.0.0
+
+Bump to prettygoat 4.0
+
 # 1.1.2
 
 Fix filtering of realtime event
