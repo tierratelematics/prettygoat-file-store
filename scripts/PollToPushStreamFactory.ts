@@ -1,4 +1,4 @@
-import {IStreamFactory, Event, IProjection, Snapshot, SpecialEvents} from "prettygoat";
+import {IStreamFactory, Event, ProjectionQuery, IIdempotenceFilter, SpecialEvents} from "prettygoat";
 import {injectable, inject, optional} from "inversify";
 import {Observable} from "rxjs";
 import {DefaultPollToPushConfig, IPollToPushConfig} from "./PollToPushConfig";
@@ -11,9 +11,10 @@ class PollToPushStreamFactory implements IStreamFactory {
 
     }
 
-    generate(projection: IProjection, snapshot: Snapshot<any>, completions: Observable<string>): Observable<Event> {
+    from(query?: ProjectionQuery, idempotence?: IIdempotenceFilter, backpressureGate?: Observable<string>): Observable<Event> {
+        let scanPointer = null;
         return this.streamFactory
-            .generate(projection, snapshot, completions)
+            .from(query, idempotence, backpressureGate)
             .concat(Observable.of({
                 type: SpecialEvents.REALTIME,
                 payload: null,
@@ -23,12 +24,12 @@ class PollToPushStreamFactory implements IStreamFactory {
             .concat(
                 Observable
                     .interval(this.config.interval)
-                    .flatMap(_ => this.streamFactory.generate(projection, snapshot, completions))
+                    .flatMap(_ => this.streamFactory.from(query, idempotence, backpressureGate))
             )
-            .filter(event => !event.timestamp ? true : event.timestamp > snapshot.lastEvent)
+            .filter(event => !event.timestamp ? true : event.timestamp > scanPointer)
             .do(event => {
                 if (event.timestamp)
-                    snapshot.lastEvent = event.timestamp;
+                    scanPointer = event.timestamp;
             });
     }
 }

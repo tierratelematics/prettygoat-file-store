@@ -1,4 +1,4 @@
-import {IStreamFactory, IProjection, Snapshot, Event} from "prettygoat";
+import {IStreamFactory, ProjectionQuery, IIdempotenceFilter, Event} from "prettygoat";
 import {Observable} from "rxjs";
 import {inject, injectable, optional} from "inversify";
 import {IDirectoryScanner} from "./DirectoryScanner";
@@ -13,7 +13,7 @@ class FileStreamFactory implements IStreamFactory {
 
     }
 
-    generate(projection: IProjection<any>): Observable<Event> {
+    from(query?: ProjectionQuery, idempotence?: IIdempotenceFilter, backpressureGate?: Observable<string>): Observable<Event> {
         return Observable.from(this.directoryScanner.scan(this.config.directory))
             .map<any, Event[]>(scan => _(scan).flatten().map((event: any) => {
                 if (_.isString(event.timestamp))

@@ -23,7 +23,7 @@ describe("Given a file stream factory", () => {
             });
             it("should use a list of json files as events", (done) => {
                 let notifications = [];
-                subject.generate(null).subscribe(event => notifications.push(event), null, () => {
+                subject.from().subscribe(event => notifications.push(event), null, () => {
                     expect(notifications).to.have.length(3);
                     expect(notifications[0]).to.eql({
                         "type": "test_event",
@@ -50,7 +50,7 @@ describe("Given a file stream factory", () => {
             });
             it("should not be transformed", (done) => {
                 let notifications = [];
-                subject.generate(null).subscribe(event => notifications.push(event), null, () => {
+                subject.from().subscribe(event => notifications.push(event), null, () => {
                     expect(notifications).to.have.length(3);
                     expect(notifications[0]).to.eql({
                         "type": "test_event",
@@ -77,7 +77,7 @@ describe("Given a file stream factory", () => {
             });
             it("should order them", (done) => {
                 let notifications = [];
-                subject.generate(null).subscribe(event => notifications.push(event), null, () => {
+                subject.from().subscribe(event => notifications.push(event), null, () => {
                     expect(notifications[0].timestamp).to.eql(new Date(2));
                     expect(notifications[1].timestamp).to.eql(new Date(4));
                     expect(notifications[2].timestamp).to.eql(new Date(10));
@@ -92,7 +92,7 @@ describe("Given a file stream factory", () => {
                 scanner.setup(s => s.scan("events")).returns(() => Promise.resolve(events));
             });
             it("should warn the user about the bad date", (done) => {
-                subject.generate(null).subscribe(null, error => {
+                subject.from().subscribe(null, error => {
                     expect(error.message).to.be("An invalid date has been supplied to an event: could be new Date(0) or a bad format");
                     done();
                 });
