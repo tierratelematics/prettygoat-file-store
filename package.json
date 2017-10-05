@@ -21,8 +21,8 @@
     "typemoq": "~1.2.1"
   },
   "peerDependencies": {
-    "prettygoat": "^4.0.0"
+    "prettygoat": "^5.0.0"
   },
-  "main": "dist/prettygoat-file-store.js",
-  "typings": "declarations/prettygoat-file-store.d.ts"
+  "main": "dist",
+  "typings": "dist"
 }
